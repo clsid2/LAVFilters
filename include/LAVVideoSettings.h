@@ -22,6 +22,10 @@
 // {FA40D6E9-4D38-4761-ADD2-71A9EC5FD32F}
 DEFINE_GUID(IID_ILAVVideoSettings, 0xfa40d6e9, 0x4d38, 0x4761, 0xad, 0xd2, 0x71, 0xa9, 0xec, 0x5f, 0xd3, 0x2f);
 
+// {F3BB90A3-B1CE-48C1-954C-3A506A33DE25}
+DEFINE_GUID(IID_ILAVVideoSettingsMPCHCCustom, 
+0xf3bb90a3, 0xb1ce, 0x48c1, 0x95, 0x4c, 0x3a, 0x50, 0x6a, 0x33, 0xde, 0x25);
+
 // {1CC2385F-36FA-41B1-9942-5024CE0235DC}
 DEFINE_GUID(IID_ILAVVideoStatus, 0x1cc2385f, 0x36fa, 0x41b1, 0x99, 0x42, 0x50, 0x24, 0xce, 0x2, 0x35, 0xdc);
 
@@ -403,6 +407,13 @@ interface __declspec(uuid("FA40D6E9-4D38-4761-ADD2-71A9EC5FD32F")) ILAVVideoSett
 
     //  Enable the creation of the Closed Caption output pin
     STDMETHOD(SetEnableCCOutputPin)(BOOL bEnabled) = 0;
+};
+
+[uuid("F3BB90A3-B1CE-48C1-954C-3A506A33DE25")]
+interface ILAVVideoSettingsMPCHCCustom : public IUnknown
+{
+  // Set a custom callback function to handle the property page
+  STDMETHOD(SetPropertyPageCallback)(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter)) = 0;
 };
 
 // LAV Video status interface

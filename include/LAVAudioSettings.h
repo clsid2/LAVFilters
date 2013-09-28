@@ -22,6 +22,10 @@
 // {4158A22B-6553-45D0-8069-24716F8FF171}
 DEFINE_GUID(IID_ILAVAudioSettings, 0x4158a22b, 0x6553, 0x45d0, 0x80, 0x69, 0x24, 0x71, 0x6f, 0x8f, 0xf1, 0x71);
 
+// {40A1D048-D41B-4D53-B737-FF9F99A245A0}
+DEFINE_GUID(IID_ILAVAudioSettingsMPCHCCustom, 
+            0x40a1d048, 0xd41b, 0x4d53, 0xb7, 0x37, 0xff, 0x9f, 0x99, 0xa2, 0x45, 0xa0);
+
 // {A668B8F2-BA87-4F63-9D41-768F7DE9C50E}
 DEFINE_GUID(IID_ILAVAudioStatus, 0xa668b8f2, 0xba87, 0x4f63, 0x9d, 0x41, 0x76, 0x8f, 0x7d, 0xe9, 0xc5, 0xe);
 
@@ -199,6 +203,13 @@ interface __declspec(uuid("4158A22B-6553-45D0-8069-24716F8FF171")) ILAVAudioSett
     // Fallback to audio decoding if bitstreaming is not supported by the audio renderer/hardware
     STDMETHOD_(BOOL, GetBitstreamingFallback)() = 0;
     STDMETHOD(SetBitstreamingFallback)(BOOL bBitstreamingFallback) = 0;
+};
+
+[uuid("40A1D048-D41B-4D53-B737-FF9F99A245A0")]
+interface ILAVAudioSettingsMPCHCCustom : public IUnknown
+{
+  // Set a custom callback function to handle the property page
+  STDMETHOD(SetPropertyPageCallback)(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter)) = 0;
 };
 
 // LAV Audio Status Interface
