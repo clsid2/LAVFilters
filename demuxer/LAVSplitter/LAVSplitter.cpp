@@ -102,6 +102,7 @@ STDMETHODIMP CLAVSplitter::CreateTrayIcon()
     if (CBaseTrayIcon::ProcessBlackList())
         return S_FALSE;
     m_pTrayIcon = new CLAVSplitterTrayIcon(this, TEXT(LAV_SPLITTER), IDI_ICON1);
+    m_pTrayIcon->SetCustomOpenPropPage(m_fpPropPageCallback);
     return S_OK;
 }
 
@@ -334,7 +335,9 @@ STDMETHODIMP CLAVSplitter::NonDelegatingQueryInterface(REFIID riid, void **ppv)
     }
 
     return QI(IMediaSeeking) QI(IAMStreamSelect) QI(ISpecifyPropertyPages) QI(ISpecifyPropertyPages2) QI2(ILAVFSettings)
+        QI2(ILAVFSettingsMPCHCCustom)
         QI2(ILAVFSettingsInternal) QI2(ILAVFSettingsEnhancementLayers) QI(IObjectWithSite) QI(IBufferInfo) __super::NonDelegatingQueryInterface(riid, ppv);
+
 }
 
 // ISpecifyPropertyPages2
@@ -2242,6 +2245,15 @@ STDMETHODIMP_(DWORD) CLAVSplitter::GetMaxQueueSize()
 STDMETHODIMP_(std::set<FormatInfo> &) CLAVSplitter::GetInputFormats()
 {
     return m_InputFormats;
+}
+
+// ILAVFSettingsMPCHCCustom
+STDMETHODIMP CLAVSplitter::SetPropertyPageCallback(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter))
+{
+    m_fpPropPageCallback = fpPropPageCallback;
+    if (m_pTrayIcon)
+        m_pTrayIcon->SetCustomOpenPropPage(fpPropPageCallback);
+    return S_OK;  
 }
 
 CLAVSplitterSource::CLAVSplitterSource(LPUNKNOWN pUnk, HRESULT *phr)
