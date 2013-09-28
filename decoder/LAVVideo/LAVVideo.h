@@ -66,6 +66,7 @@ class __declspec(uuid("EE30215D-164F-4A92-A4EB-9D4C13390F9F")) CLAVVideo
     , public ILAVVideoStatus
     , public ILAVVideoCallback
     , public IPropertyBag
+    , public ILAVVideoSettingsMPCHCCustom
 {
   public:
     CLAVVideo(LPUNKNOWN pUnk, HRESULT *phr);
@@ -137,6 +138,9 @@ class __declspec(uuid("EE30215D-164F-4A92-A4EB-9D4C13390F9F")) CLAVVideo
     STDMETHODIMP_(LAVDeintMode) GetDeinterlacingMode();
 
     STDMETHODIMP SetGPUDeviceIndex(DWORD dwDevice);
+
+    // ILAVVideoSettingsMPCHCCustom
+    STDMETHODIMP SetPropertyPageCallback(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter));
 
     STDMETHODIMP_(DWORD) GetHWAccelNumDevices(LAVHWAccel hwAccel);
     STDMETHODIMP GetHWAccelDeviceInfo(LAVHWAccel hwAccel, DWORD dwIndex, BSTR *pstrDeviceName,
@@ -367,6 +371,7 @@ class __declspec(uuid("EE30215D-164F-4A92-A4EB-9D4C13390F9F")) CLAVVideo
     DWORD m_dwGPUDeviceIndex = DWORD_MAX;
 
     CBaseTrayIcon *m_pTrayIcon = nullptr;
+    HRESULT (*m_fpPropPageCallback)(IBaseFilter* pFilter) = nullptr;
 
 #ifdef DEBUG
     FloatingAverage<double> m_pixFmtTimingAvg;
