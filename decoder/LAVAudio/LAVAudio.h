@@ -80,6 +80,7 @@ class __declspec(uuid("E8E73B6B-4CB3-44A4-BE99-4F7BCB96E491")) CLAVAudio
     , public ISpecifyPropertyPages2
     , public ILAVAudioSettings
     , public ILAVAudioStatus
+    , public ILAVAudioSettingsMPCHCCustom
 {
   public:
     CLAVAudio(LPUNKNOWN pUnk, HRESULT *phr);
@@ -137,6 +138,9 @@ class __declspec(uuid("E8E73B6B-4CB3-44A4-BE99-4F7BCB96E491")) CLAVAudio
     STDMETHODIMP_(BOOL) GetSuppressFormatChanges();
     STDMETHODIMP SetOutput51LegacyLayout(BOOL b51Legacy);
     STDMETHODIMP_(BOOL) GetOutput51LegacyLayout();
+
+    // ILAVAudioSettingsMPCHCCustom
+    STDMETHODIMP SetPropertyPageCallback(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter));
 
     // ILAVAudioStatus
     STDMETHODIMP_(BOOL) IsSampleFormatSupported(LAVAudioSampleFormat sfCheck);
@@ -396,4 +400,5 @@ class __declspec(uuid("E8E73B6B-4CB3-44A4-BE99-4F7BCB96E491")) CLAVAudio
     } m_raData;
 
     CBaseTrayIcon *m_pTrayIcon = nullptr;
+    HRESULT (*m_fpPropPageCallback)(IBaseFilter* pFilter) = nullptr;
 };
