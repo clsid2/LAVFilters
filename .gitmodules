@@ -1,6 +1,6 @@
 [submodule "ffmpeg"]
 	path = ffmpeg
-	url = https://github.com/mpc-hc/FFmpeg.git
+	url = https://github.com/clsid2/FFmpeg.git
 [submodule "libbluray"]
 	path = libbluray
 	url = git://git.1f0.de/libbluray.git
