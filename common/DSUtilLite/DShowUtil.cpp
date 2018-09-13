@@ -771,7 +771,8 @@ BOOL CheckApplicationBlackList(LPCTSTR subkey)
   CRegistry regLM = CRegistry(HKEY_LOCAL_MACHINE, subkey, hr, TRUE);
   if (SUCCEEDED(hr)) {
     dwVal = regLM.ReadDWORD(processName, hr);
-    return SUCCEEDED(hr) && dwVal;
+    if (SUCCEEDED(hr))
+      return dwVal;
   }
 
   // Check current user path
