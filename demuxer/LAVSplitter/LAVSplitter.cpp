@@ -153,7 +153,7 @@ STDMETHODIMP CLAVSplitter::LoadDefaults()
   m_settings.PreferHighQualityAudio = TRUE;
   m_settings.QueueMaxPackets  = 350;
   m_settings.QueueMaxMemSize  = 256;
-  m_settings.NetworkAnalysisDuration = 1000;
+  m_settings.NetworkAnalysisDuration = 2100;
 
   for (const FormatInfo& fmt : m_InputFormats) {
     m_settings.formats[std::string(fmt.strName)] = get_iformat_default(fmt.strName);
