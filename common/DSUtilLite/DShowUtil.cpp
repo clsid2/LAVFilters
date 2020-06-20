@@ -879,7 +879,8 @@ BOOL CheckApplicationBlackList(LPCTSTR subkey)
     if (SUCCEEDED(hr))
     {
         dwVal = regLM.ReadDWORD(processName, hr);
-        return SUCCEEDED(hr) && dwVal;
+        if (SUCCEEDED(hr))
+            return dwVal;
     }
 
     // Check current user path
