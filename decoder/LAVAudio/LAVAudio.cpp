@@ -1689,6 +1689,24 @@ HRESULT CLAVAudio::CheckConnect(PIN_DIRECTION dir, IPin *pPin)
         // TODO: Check if the upstream source filter is LAVFSplitter, and store that somewhere
         // Validate that this is called before any media type negotiation
     }
+    else if (dir == PINDIR_OUTPUT) {
+        // Check if we want to bitstream
+        if (m_avBSContext) {
+            // Get the filter we're connecting to
+            IBaseFilter *pFilter = GetFilterFromPin(pPin);
+            CLSID guidFilter = GUID_NULL;
+            if (pFilter != nullptr) {
+                if (FAILED(pFilter->GetClassID(&guidFilter))) {
+                    guidFilter = GUID_NULL;
+                }
+                SafeRelease(&pFilter);
+            }
+            // Don't allow connection to AC3Filter and ffdshow
+            if (guidFilter == CLSID_AC3Filter || guidFilter == CLSID_ffdshow_audio || guidFilter == CLSID_ffdshow_audio_raw) {
+                return VFW_E_TYPE_NOT_ACCEPTED;
+            }
+        }
+    }
     return __super::CheckConnect(dir, pPin);
 }
 
