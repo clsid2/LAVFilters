@@ -477,6 +477,7 @@ HRESULT CLAVAudioMixingProp::OnApplyChanges()
     BOOL bVal = FALSE;
 
     dwVal = (DWORD)SendDlgItemMessage(m_Dlg, IDC_OUTPUT_SPEAKERS, CB_GETCURSEL, 0, 0);
+    if (dwVal >= 0)
     m_pAudioSettings->SetMixingLayout(dwSpkLayouts[dwVal]);
 
     bVal = (BOOL)SendDlgItemMessage(m_Dlg, IDC_MIXING, BM_GETCHECK, 0, 0);
