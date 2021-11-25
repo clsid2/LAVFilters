@@ -368,7 +368,7 @@ HRESULT CLAVOutputPin::QueuePacket(Packet *pPacket)
     // While everything is good AND no pin is drying AND the queue is full .. sleep
     // The queu has a "soft" limit of MAX_PACKETS_IN_QUEUE, and a hard limit of MAX_PACKETS_IN_QUEUE * 2
     // That means, even if one pin is drying, we'll never exceed MAX_PACKETS_IN_QUEUE * 2
-    while (S_OK == m_hrDeliver && (m_queue.DataSize() > m_nQueueMaxMem || m_queue.Size() > 2 * m_nQueueHigh ||
+    while (S_OK == m_hrDeliver && (m_queue.DataSize() > m_nQueueMaxMem || m_queue.Size() > max(5000, 2 * m_nQueueHigh) ||
                                    (m_queue.Size() > m_nQueueHigh && !pSplitter->IsAnyPinDrying())))
         Sleep(10);
 
