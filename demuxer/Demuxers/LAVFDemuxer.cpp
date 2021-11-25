@@ -2837,7 +2837,7 @@ const CBaseDemuxer::stream *CLAVFDemuxer::SelectVideoStream()
         }
         else if (!m_bRM || check_nb_f > 0)
         {
-            if (checkPixels > bestPixels)
+            if (checkPixels > uint64_t(bestPixels * 1.02))
             {
                 best = check;
             }
