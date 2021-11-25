@@ -238,4 +238,6 @@ class CLAVFDemuxer
     int m_Abort = 0;
     time_t m_timeAbort = 0;
     time_t m_timeOpening = 0;
+    time_t m_timePacketRead = 0;
+
 };
