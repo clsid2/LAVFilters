@@ -189,6 +189,11 @@ int CLAVFDemuxer::avio_interrupt_cb(void *opaque)
     if (demux->m_timeOpening && now > (demux->m_timeOpening + AVFORMAT_OPEN_TIMEOUT))
         return 1;
 
+    if (demux->m_timePacketRead && now > (demux->m_timePacketRead + AVFORMAT_OPEN_TIMEOUT)) {
+        DbgLog((LOG_ERROR, 0, TEXT("Timeout while reading packet")));
+        return 1;
+    }
+
     if (demux->m_Abort && now > demux->m_timeAbort)
         return 1;
 
@@ -1468,6 +1473,7 @@ STDMETHODIMP CLAVFDemuxer::GetNextPacket(Packet **ppPacket)
         m_avFormat->pb->eof_reached = 0;
     }
 
+    m_timePacketRead = time(nullptr);
     int result = 0;
     try
     {
@@ -1477,10 +1483,12 @@ STDMETHODIMP CLAVFDemuxer::GetNextPacket(Packet **ppPacket)
     {
         // ignore..
     }
+    m_timePacketRead = 0;
 
     if (result == AVERROR(EINTR) || result == AVERROR(EAGAIN))
     {
         // timeout, probably no real error, return empty packet
+        DbgLog((LOG_TRACE, 10, L"::GetNextPacket(): Timeout"));
         bReturnEmpty = true;
     }
     else if (result == AVERROR_EOF)
@@ -1489,6 +1497,7 @@ STDMETHODIMP CLAVFDemuxer::GetNextPacket(Packet **ppPacket)
     }
     else if (result < 0)
     {
+        DbgLog((LOG_TRACE, 10, L"::GetNextPacket(): Fail, result = %d"), result);
         // meh, fail
     }
     else if (pkt.size <= 0 || pkt.stream_index < 0 || (unsigned)pkt.stream_index >= m_avFormat->nb_streams)
