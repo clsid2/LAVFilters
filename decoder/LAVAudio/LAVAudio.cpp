@@ -281,6 +281,9 @@ HRESULT CLAVAudio::ReadSettings(HKEY rootKey)
         if (m_settings.MixingLayout == AV_CH_LAYOUT_5POINT1_BACK)
             m_settings.MixingLayout = AV_CH_LAYOUT_5POINT1;
 
+        if (m_settings.MixingLayout == 0)
+            m_settings.MixingLayout = AV_CH_LAYOUT_STEREO;
+
         dwVal = reg.ReadDWORD(L"MixingFlags", hr);
         if (SUCCEEDED(hr))
             m_settings.MixingFlags = dwVal;
