@@ -181,6 +181,9 @@ class __declspec(uuid("171252A0-8820-4AFE-9DF8-5C92B2D66B04")) CLAVSplitter
     // ILAVFSettingsMPCHCCustom
     STDMETHODIMP SetPropertyPageCallback(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter));
 
+    // ILAVFSettingsMPCHCCustom
+    STDMETHODIMP SetPropertyPageCallback(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter));
+
     // ILAVSplitterSettingsInternal
     STDMETHODIMP_(LPCSTR) GetInputFormat()
     {

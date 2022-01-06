@@ -268,7 +268,15 @@ std::string lavf_get_stream_description(const AVStream *pStream)
 
     if (lang)
     {
-        sLanguage = ProbeLangForLanguage(lang);
+        AVDictionaryEntry* dictEntry = av_dict_get(pStream->metadata, "langType", nullptr, 0);
+        if (dictEntry && strcmp(dictEntry->value, "BCP 47") == 0)
+        {
+            sLanguage = lang; //ProbeLangForLanguage will not always yield good results for a BCP-47 tag. possibly do something better?
+        }
+        else
+        {
+            sLanguage = ProbeLangForLanguage(lang);
+        }
         if (sLanguage.empty())
         {
             sLanguage = lang;

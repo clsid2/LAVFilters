@@ -209,3 +209,10 @@ interface ILAVFSettingsMPCHCCustom : public IUnknown
     // Set a custom callback function to handle the property page
     STDMETHOD(SetPropertyPageCallback)(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter)) = 0;
 };
+
+[uuid("77C1027F-BF53-458F-82CE-9DD88A2C300B")]
+interface ILAVFSettingsMPCHCCustom : public IUnknown
+{
+    // Set a custom callback function to handle the property page
+    STDMETHOD(SetPropertyPageCallback)(HRESULT (*fpPropPageCallback)(IBaseFilter* pFilter)) = 0;
+};
