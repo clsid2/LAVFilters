@@ -1328,7 +1328,7 @@ HRESULT CLAVAudio::ffmpeg_init(AVCodecID codec, const void *format, const GUID f
     else
     {
         m_faJitter.SetNumSamples(64);
-        m_JitterLimit = MAX_JITTER_DESYNC;
+        m_JitterLimit = MAX_JITTER_DESYNC * 6;
     }
 
     // Fake codecs that are dependant in input bits per sample, mostly to handle QT PCM tracks
