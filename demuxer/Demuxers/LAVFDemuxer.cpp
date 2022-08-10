@@ -858,6 +858,11 @@ STDMETHODIMP CLAVFDemuxer::InitAVFormat(LPCOLESTR pszFileName, BOOL bForce)
 
             if (st->codecpar->codec_id == AV_CODEC_ID_TTF || st->codecpar->codec_id == AV_CODEC_ID_OTF)
             {
+                // skip loading system fonts, this can mess up player gui
+                if (_strnicmp(attachFilename->value, "segoe", 5) == 0) {
+                    continue;
+                }
+
                 if (!m_pFontInstaller)
                 {
                     m_pFontInstaller = new CFontInstaller();
