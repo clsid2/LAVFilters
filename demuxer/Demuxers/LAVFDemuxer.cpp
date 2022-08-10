@@ -207,6 +207,7 @@ static LPCWSTR wszImageExtensions[] = {
     L".tga",                     // TGA
     L".bmp",                     // BMP
     L".j2c",                     // JPEG2000
+    L".webp",                    // WebP
 };
 
 static LPCWSTR wszBlockedExtensions[] = {L".ifo", L".bup"};
@@ -317,6 +318,8 @@ trynoformat:
 
     LPWSTR extension = pszFileName ? PathFindExtensionW(pszFileName) : nullptr;
 
+    bool imageformat = false;
+
     const AVInputFormat *inputFormat = nullptr;
     if (format)
     {
@@ -329,6 +332,7 @@ trynoformat:
         {
             if (_wcsicmp(extension, wszImageExtensions[i]) == 0)
             {
+                imageformat = true;
                 if (byteContext)
                 {
                     inputFormat = av_find_input_format("image2pipe");
@@ -364,6 +368,10 @@ trynoformat:
     av_dict_set(&options, "reconnect", "1", 0);         // for http, reconnect if we get disconnected
     av_dict_set(&options, "skip_clear", "1", 0);        // mpegts program handling
     av_dict_set(&options, "max_reload", "7", 0);        // playlist reloading for HLS
+    if (imageformat) {
+        av_dict_set(&options, "loop", "1", 0);          // loop images
+        av_dict_set(&options, "framerate", "1", 0);     // image framerate
+    }
 
     if (pszUserAgent)
     {
