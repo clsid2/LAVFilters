@@ -1514,6 +1514,10 @@ HRESULT CLAVVideo::ReconnectOutput(int width, int height, AVRational ar, DXVA2_E
         {
             pBIH->biWidth = FFALIGN(width, 48);
         }
+        else if ((width & 1) && (mt.subtype == MEDIASUBTYPE_NV12 || mt.subtype == MEDIASUBTYPE_YV12 || mt.subtype == MEDIASUBTYPE_YUY2 || mt.subtype == MEDIASUBTYPE_I420))
+        {
+            pBIH->biWidth = FFALIGN(width, 2);
+        }
 
         HRESULT hrQA = m_pOutput->GetConnected()->QueryAccept(&mt);
         if (bDXVA)
@@ -1644,6 +1648,7 @@ HRESULT CLAVVideo::ReconnectOutput(int width, int height, AVRational ar, DXVA2_E
             else
             {
                 DbgLog((LOG_TRACE, 10, L"-> Receive Connection failed (hr: %x); QueryAccept: %x", hr, hrQA));
+                return E_FAIL;
             }
         }
         if (bNeedReconnect && !bDXVA)
