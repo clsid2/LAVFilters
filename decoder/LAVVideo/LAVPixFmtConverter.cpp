@@ -316,6 +316,10 @@ void CLAVPixFmtConverter::GetMediaType(CMediaType *mt, int index, LONG biWidth, 
     {
         pBIH->biWidth = FFALIGN(biWidth, 48);
     }
+    else if ((biWidth & 1) && (guid == MEDIASUBTYPE_NV12 || guid == MEDIASUBTYPE_YV12 || guid == MEDIASUBTYPE_YUY2 || guid == MEDIASUBTYPE_I420))
+    {
+        pBIH->biWidth = FFALIGN(biWidth, 2);
+    }
 
     mt->SetSampleSize(pBIH->biSizeImage);
     mt->SetTemporalCompression(0);
