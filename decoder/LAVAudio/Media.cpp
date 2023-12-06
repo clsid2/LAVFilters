@@ -143,7 +143,7 @@ static const FFMPEG_SUBTYPE_MAP lavc_audio_codecs[] = {
   { &MEDIASUBTYPE_729A,         AV_CODEC_ID_G729     },
   { &MEDIASUBTYPE_G729,         AV_CODEC_ID_G729     },
   { &MEDIASUBTYPE_IMC,          AV_CODEC_ID_IMC      },
-
+  
   // Special LAVFSplitter interface
   { &MEDIASUBTYPE_FFMPEG_AUDIO, AV_CODEC_ID_NONE     },
 };
