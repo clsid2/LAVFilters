@@ -334,6 +334,9 @@ static const FFMPEG_SUBTYPE_MAP lavc_video_codecs[] = {
   { &MEDIASUBTYPE_SMK4, AV_CODEC_ID_SMACKVIDEO },
   { &MEDIASUBTYPE_THPV, AV_CODEC_ID_THP },
   { &MEDIASUBTYPE_ROQV, AV_CODEC_ID_ROQ },
+  { &MEDIASUBTYPE_WC3V, AV_CODEC_ID_XAN_WC3 },
+  { &MEDIASUBTYPE_MDEC, AV_CODEC_ID_MDEC },
+  { &MEDIASUBTYPE_4XMV, AV_CODEC_ID_4XM },
 
   // Image Formats
   { &MEDIASUBTYPE_PNG,  AV_CODEC_ID_PNG   },
@@ -654,6 +657,9 @@ const AMOVIESETUP_MEDIATYPE CLAVVideo::sudPinTypesIn[] = {
   { &MEDIATYPE_Video, &MEDIASUBTYPE_SMK4 },
   { &MEDIATYPE_Video, &MEDIASUBTYPE_THPV },
   { &MEDIATYPE_Video, &MEDIASUBTYPE_ROQV },
+  { &MEDIATYPE_Video, &MEDIASUBTYPE_WC3V },
+  { &MEDIATYPE_Video, &MEDIASUBTYPE_MDEC },
+  { &MEDIATYPE_Video, &MEDIASUBTYPE_4XMV },
 
   // Image Formats
   { &MEDIATYPE_Video, &MEDIASUBTYPE_PNG  },
@@ -708,7 +714,7 @@ static codec_config_t m_codec_config[] = {
   { 1, { AV_CODEC_ID_VP8 }},                                                 // Codec_VP8
   { 2, { AV_CODEC_ID_WMV3, AV_CODEC_ID_WMV3IMAGE }},                         // Codec_WMV3
   { 2, { AV_CODEC_ID_WMV1, AV_CODEC_ID_WMV2 }, "wmv12", "Windows Media Video 7/8" },  // Codec_WMV12
-  { 3, { AV_CODEC_ID_MJPEG, AV_CODEC_ID_MJPEGB, AV_CODEC_ID_AMV }},                // Codec_MJPEG
+  { 6, { AV_CODEC_ID_MJPEG, AV_CODEC_ID_MJPEGB, AV_CODEC_ID_JPEGLS, AV_CODEC_ID_AMV, AV_CODEC_ID_SP5X, AV_CODEC_ID_AVRN }}, // Codec_MJPEG
   { 2, { AV_CODEC_ID_THEORA, AV_CODEC_ID_VP3 }},                                // Codec_Theora
   { 2, { AV_CODEC_ID_FLV1, AV_CODEC_ID_FLASHSV }, "flash", "Flash Video (FLV1, FSV1)"}, // Codec_FLV1
   { 3, { AV_CODEC_ID_VP6, AV_CODEC_ID_VP6A, AV_CODEC_ID_VP6F }},                   // Codec_VP6
