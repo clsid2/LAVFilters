@@ -152,6 +152,7 @@ HRESULT CLAVVideo::LoadDefaults()
     for (int i = 0; i < HWCodec_NB; ++i)
         m_settings.bHWFormats[i] = TRUE;
 
+    m_settings.bHWFormats[HWCodec_MPEG2] = FALSE;
     m_settings.bHWFormats[HWCodec_MPEG4] = FALSE;
     m_settings.bHWFormats[HWCodec_H264MVC] = FALSE;
 
