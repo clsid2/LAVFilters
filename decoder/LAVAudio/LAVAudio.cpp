@@ -162,7 +162,7 @@ HRESULT CLAVAudio::LoadDefaults()
 
     m_settings.DTSHDFraming = FALSE;
     m_settings.bBitstreamingFallback = TRUE;
-    m_settings.AutoAVSync = TRUE;
+    m_settings.AutoAVSync = FALSE;
     m_settings.ExpandMono = FALSE;
     m_settings.Expand61 = FALSE;
     m_settings.OutputStandardLayout = TRUE;
