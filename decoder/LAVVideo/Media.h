@@ -27,7 +27,7 @@
 AVCodecID FindCodecId(const CMediaType *mt);
 int getThreadFlags(AVCodecID codecId);
 
-#define MAX_NUM_CC_CODECS 3
+#define MAX_NUM_CC_CODECS 6
 
 struct codec_config_t
 {
