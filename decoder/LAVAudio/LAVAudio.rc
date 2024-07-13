@@ -71,7 +71,7 @@ BEGIN
     GROUPBOX        "Dynamic Range Compression",IDC_DRC_BOX,7,7,196,40
     CONTROL         "Apply DRC on formats that support it (AC3, EAC3)",IDC_DRC,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,17,177,10
-    CONTROL         "",IDC_DRC_LEVEL,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,50,30,100,12
+    CONTROL         "",IDC_DRC_LEVEL,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP | TBS_DOWNISLEFT,50,30,100,12
     LTEXT           "Level: ",IDC_LBL_DRC_LEVEL,15,30,28,8
     LTEXT           "100%",IDC_DRC_LEVEL_TEXT,150,30,20,8,0,WS_EX_RIGHT
     GROUPBOX        "Bitstreaming (S/PDIF, HDMI)",IDC_BITSTREAMING,7,50,196,98
@@ -130,13 +130,13 @@ BEGIN
     CONTROL         "Dolby Pro Logic",IDC_MIXMODE_DOLBY,"Button",BS_AUTORADIOBUTTON,235,91,116,10
     CONTROL         "Dolby Pro Logic II",IDC_MIXMODE_DPL2,"Button",BS_AUTORADIOBUTTON,235,103,116,10
     LTEXT           "Center Mix Level",IDC_LBL_CENTER_LEVEL,12,50,54,8
-    CONTROL         "",IDC_MIX_LEVEL_CENTER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,72,47,130,15
+    CONTROL         "",IDC_MIX_LEVEL_CENTER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP | TBS_DOWNISLEFT,72,47,130,15
     LTEXT           "0.00",IDC_MIX_LEVEL_CENTER_TEXT,202,50,16,8
     LTEXT           "Surround Mix Level",IDC_LBL_SURROUND_LEVEL,12,65,62,8
-    CONTROL         "",IDC_MIX_LEVEL_SURROUND,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,72,62,130,15
+    CONTROL         "",IDC_MIX_LEVEL_SURROUND,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP | TBS_DOWNISLEFT,72,62,130,15
     LTEXT           "0.00",IDC_MIX_LEVEL_SURROUND_TEXT,202,65,16,8
     LTEXT           "LFE Mix Level",IDC_LBL_LFE_LEVEL,12,80,44,8
-    CONTROL         "",IDC_MIX_LEVEL_LFE,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,72,77,130,15
+    CONTROL         "",IDC_MIX_LEVEL_LFE,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP | TBS_DOWNISLEFT,72,77,130,15
     LTEXT           "0.00",IDC_MIX_LEVEL_LFE_TEXT,202,80,16,8
     LTEXT           "The mixing levels control the volume of the individual channels when being mixed with other channels into a downmix.",IDC_LBL_MIXING_LEVEL,12,97,200,18
 END
