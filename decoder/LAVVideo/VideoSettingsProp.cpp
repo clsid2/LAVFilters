@@ -153,11 +153,18 @@ HRESULT CLAVVideoSettingsProp::OnApplyChanges()
     m_pVideoSettings->SetHWAccelResolutionFlags(dwHWResFlags);
 
     dwVal = (DWORD)SendDlgItemMessage(m_Dlg, IDC_HWACCEL_DEVICE_SELECT, CB_GETCURSEL, 0, 0);
-    if (dwVal == 0)
+    DWORD deviceId = (DWORD)-1; // to signal to overrule runtimeconfig
+    if (dwVal == 0) {
         dwVal = LAVHWACCEL_DEVICE_DEFAULT;
-    else
+    } else if (dwVal == 1 && m_pVideoSettings->GetHWAccel() == HWAccel_D3D11) {
+        dwVal = 0;
+        deviceId = (DWORD)-2; // to signal d3d11 copyback
+    } else if (dwVal > 1 && m_pVideoSettings->GetHWAccel() == HWAccel_D3D11) {
+        dwVal -= 2;
+    } else {
         dwVal--;
-    m_pVideoSettings->SetHWAccelDeviceIndex(m_pVideoSettings->GetHWAccel(), dwVal, 0);
+    }
+    m_pVideoSettings->SetHWAccelDeviceIndex(m_pVideoSettings->GetHWAccel(), dwVal, deviceId);
 
     BOOL bHWAccelCUVIDDXVA = (BOOL)SendDlgItemMessage(m_Dlg, IDC_HWACCEL_CUVID_DXVA, BM_GETCHECK, 0, 0);
     m_pVideoSettings->SetHWAccelDeintHQ(bHWAccelCUVIDDXVA);
@@ -464,8 +471,12 @@ HRESULT CLAVVideoSettingsProp::UpdateHWOptions()
                                           L"Copy-Back, use Automatic for the best performance.";
 
     SendDlgItemMessage(m_Dlg, IDC_HWACCEL_DEVICE_SELECT, CB_RESETCONTENT, 0, 0);
-    SendDlgItemMessage(m_Dlg, IDC_HWACCEL_DEVICE_SELECT, CB_ADDSTRING, 0,
-                       (hwAccel == HWAccel_D3D11) ? (LPARAM)L"Automatic (Native)" : (LPARAM)L"Automatic");
+    if (hwAccel == HWAccel_D3D11) {
+        SendDlgItemMessage(m_Dlg, IDC_HWACCEL_DEVICE_SELECT, CB_ADDSTRING, 0, (LPARAM)L"Automatic (Native)");
+        SendDlgItemMessage(m_Dlg, IDC_HWACCEL_DEVICE_SELECT, CB_ADDSTRING, 0, (LPARAM)L"Automatic (CopyBack)");
+    } else {
+        SendDlgItemMessage(m_Dlg, IDC_HWACCEL_DEVICE_SELECT, CB_ADDSTRING, 0, (LPARAM)L"Automatic");
+    }
 
     DWORD dwnDevices = m_pVideoSettings->GetHWAccelNumDevices(hwAccel);
     for (DWORD dwDevice = 0; dwDevice < dwnDevices; dwDevice++)
@@ -494,8 +505,11 @@ HRESULT CLAVVideoSettingsProp::UpdateHWOptions()
     {
         DWORD dwDeviceId = 0;
         m_HWDeviceIndex = m_pVideoSettings->GetHWAccelDeviceIndex(hwAccel, &dwDeviceId);
+
         if (m_HWDeviceIndex == LAVHWACCEL_DEVICE_DEFAULT)
             m_HWDeviceIndex = 0;
+        else if (hwAccel == HWAccel_D3D11 && dwDeviceId != 0)
+            m_HWDeviceIndex += 2;
         else
             m_HWDeviceIndex++;
 
@@ -847,11 +861,7 @@ INT_PTR CLAVVideoSettingsProp::OnReceiveMessage(HWND hwnd, UINT uMsg, WPARAM wPa
         }
         else if (HIWORD(wParam) == CBN_SELCHANGE && LOWORD(wParam) == IDC_HWACCEL_DEVICE_SELECT)
         {
-            lValue = SendDlgItemMessage(m_Dlg, LOWORD(wParam), CB_GETCURSEL, 0, 0);
-            if (lValue != m_HWDeviceIndex)
-            {
-                SetDirty();
-            }
+            SetDirty();
         }
         else if (LOWORD(wParam) == IDC_HWACCEL_CUVID_DXVA && HIWORD(wParam) == BN_CLICKED)
         {
