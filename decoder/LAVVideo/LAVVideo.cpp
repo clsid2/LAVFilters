@@ -2963,7 +2963,18 @@ STDMETHODIMP CLAVVideo::SetHWAccelDeviceIndex(LAVHWAccel hwAccel, DWORD dwIndex,
 {
     HRESULT hr = S_OK;
 
-    if (dwIndex != LAVHWACCEL_DEVICE_DEFAULT && dwDeviceIdentifier == 0 && !m_bRuntimeConfig)
+    bool skipinfo = m_bRuntimeConfig;
+    if (dwDeviceIdentifier == (DWORD)-2) {
+        // special value to signal that custom automatic copyback entry was selected
+        skipinfo = true;
+        dwDeviceIdentifier = 0;
+    } else if (dwDeviceIdentifier == (DWORD)-1) {
+        // special value to signal that info should not be skipped 
+        skipinfo = false;
+        dwDeviceIdentifier = 0;
+    }
+
+    if (dwIndex != LAVHWACCEL_DEVICE_DEFAULT && dwDeviceIdentifier == 0 && !skipinfo)
         hr = GetHWAccelDeviceInfo(hwAccel, dwIndex, nullptr, &dwDeviceIdentifier);
 
     if (SUCCEEDED(hr))
