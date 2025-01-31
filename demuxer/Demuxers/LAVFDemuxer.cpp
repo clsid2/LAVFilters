@@ -2809,6 +2809,16 @@ const CBaseDemuxer::stream *CLAVFDemuxer::SelectVideoStream()
             continue;
         }
 
+        // workaround for AVIF images where alpha layer is a separate stream
+        if (m_avFormat->streams[best->pid]->codecpar->codec_id == AV_CODEC_ID_AV1 && m_avFormat->streams[check->pid]->codecpar->codec_id == AV_CODEC_ID_AV1)
+        {
+            if (m_avFormat->streams[best->pid]->codecpar->format == AV_PIX_FMT_GRAY8 && m_avFormat->streams[check->pid]->codecpar->format != AV_PIX_FMT_GRAY8)
+            {
+                best = check;
+                continue;
+            }
+        }
+
         // prefer default streams
         bool checkDefault = m_avFormat->streams[check->pid]->disposition & AV_DISPOSITION_DEFAULT;
         bool bestDefault = m_avFormat->streams[best->pid]->disposition & AV_DISPOSITION_DEFAULT;
