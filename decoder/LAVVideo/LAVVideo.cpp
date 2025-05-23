@@ -1612,21 +1612,25 @@ HRESULT CLAVVideo::ReconnectOutput(int width, int height, AVRational ar, DXVA2_E
                 {
                     DbgLog((LOG_TRACE, 10, L"-> But, we need a bigger buffer, try to adapt allocator manually"));
                     IMemInputPin *pMemPin = nullptr;
-                    if (SUCCEEDED(hr = m_pOutput->GetConnected()->QueryInterface<IMemInputPin>(&pMemPin)) && pMemPin)
-                    {
+                    if (SUCCEEDED(hr = m_pOutput->GetConnected()->QueryInterface<IMemInputPin>(&pMemPin)) && pMemPin) {
                         IMemAllocator *pMemAllocator = nullptr;
-                        if (SUCCEEDED(hr = pMemPin->GetAllocator(&pMemAllocator)) && pMemAllocator)
-                        {
+                        if (SUCCEEDED(hr = pMemPin->GetAllocator(&pMemAllocator)) && pMemAllocator) {
                             ALLOCATOR_PROPERTIES props, actual;
-                            hr = pMemAllocator->GetProperties(&props);
-                            hr = pMemAllocator->Decommit();
-                            props.cbBuffer = pBIH->biSizeImage;
-                            hr = pMemAllocator->SetProperties(&props, &actual);
-                            hr = pMemAllocator->Commit();
+                            if (SUCCEEDED(hr = pMemAllocator->GetProperties(&props))) {
+                                if (SUCCEEDED(hr = pMemAllocator->Decommit())) {
+                                    props.cbBuffer = pBIH->biSizeImage;
+                                    if (SUCCEEDED(hr = pMemAllocator->SetProperties(&props, &actual))) {
+                                        hr = pMemAllocator->Commit();
+                                    }
+                                }
+                            }
                             SafeRelease(&pMemAllocator);
                         }
                     }
                     SafeRelease(&pMemPin);
+                    if (FAILED(hr)) {
+                        return hr;
+                    }
                 }
                 else
                 {
