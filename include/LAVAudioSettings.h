@@ -61,6 +61,7 @@ typedef enum LAVAudioCodec
     Codec_ATRAC,
     Codec_ADPCM,
     Codec_IMC,
+    Codec_AC4,
 
     Codec_AudioNB // Number of entries (do not use when dynamically linking)
 } LAVAudioCodec;
