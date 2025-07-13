@@ -58,6 +58,7 @@ static const FFMPEG_SUBTYPE_MAP lavc_audio_codecs[] = {
   { &MEDIASUBTYPE_DOLBY_DDPLUS_ARCSOFT, AV_CODEC_ID_EAC3 },
   { &MEDIASUBTYPE_DOLBY_TRUEHD, AV_CODEC_ID_TRUEHD   },
   { &MEDIASUBTYPE_WAVE_DOLBY_AC3, AV_CODEC_ID_AC3    },
+  { &MEDIASUBTYPE_DOLBY_AC4,    AV_CODEC_ID_AC4      },
 
   // DTS
   { &MEDIASUBTYPE_DTS,          AV_CODEC_ID_DTS      },
@@ -182,6 +183,7 @@ const AMOVIESETUP_MEDIATYPE CLAVAudio::sudPinTypesIn[] = {
   { &MEDIATYPE_Audio, &MEDIASUBTYPE_DOLBY_DDPLUS_ARCSOFT },
   { &MEDIATYPE_Audio, &MEDIASUBTYPE_DOLBY_TRUEHD },
   { &MEDIATYPE_Audio, &MEDIASUBTYPE_WAVE_DOLBY_AC3 },
+  { &MEDIATYPE_Audio, &MEDIASUBTYPE_DOLBY_AC4    },
 
   // DTS
   { &MEDIATYPE_Audio, &MEDIASUBTYPE_DTS          },
@@ -699,6 +701,7 @@ static codec_config_t m_codec_config[] = {
   { 3, { AV_CODEC_ID_ATRAC1, AV_CODEC_ID_ATRAC3, AV_CODEC_ID_ATRAC3P }, "atrac", "ATRAC (Adaptive TRansform Acoustic Coding)"}, // CC_ATRAC
   { 3, { AV_CODEC_ID_ADPCM_IMA_WAV, AV_CODEC_ID_ADPCM_G726, AV_CODEC_ID_G729 }, "adpcm", "ADPCM (adaptive differential pcm)"},  // CC_ADPCM
   { 1, { AV_CODEC_ID_IMC }},                          // CC_IMC
+  { 1, { AV_CODEC_ID_AC4 }},                          // CC_AC4
 };
 // clang-format on
 
