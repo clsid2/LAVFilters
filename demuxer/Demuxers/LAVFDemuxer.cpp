@@ -1953,6 +1953,7 @@ STDMETHODIMP CLAVFDemuxer::get_ExSeekCapabilities(long *pExCapabilities)
 STDMETHODIMP CLAVFDemuxer::get_MarkerCount(long *pMarkerCount)
 {
     CheckPointer(pMarkerCount, E_POINTER);
+    CheckPointer(m_avFormat, E_POINTER);
     *pMarkerCount = (long)m_avFormat->nb_chapters;
     return S_OK;
 }
