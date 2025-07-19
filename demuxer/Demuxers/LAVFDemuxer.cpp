@@ -3043,7 +3043,11 @@ const CBaseDemuxer::stream *CLAVFDemuxer::SelectAudioStream(std::list<std::strin
                     // First, check number of channels
                     int old_num_chans = old_stream->codecpar->ch_layout.nb_channels;
                     int new_num_chans = new_stream->codecpar->ch_layout.nb_channels;
-                    if (new_num_chans > old_num_chans)
+                    if (old_num_chans > 8 && new_num_chans < old_num_chans)
+                    {
+                        best = *sit;
+                    }
+                    else if (new_num_chans > old_num_chans && new_num_chans < 9)
                     {
                         best = *sit;
                     }
