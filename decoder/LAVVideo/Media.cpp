@@ -171,6 +171,7 @@ static const FFMPEG_SUBTYPE_MAP lavc_video_codecs[] = {
   { &MEDIASUBTYPE_FLV4, AV_CODEC_ID_VP6F },
   { &MEDIASUBTYPE_flv4, AV_CODEC_ID_VP6F },
   { &MEDIASUBTYPE_FSV1, AV_CODEC_ID_FLASHSV },
+  { &MEDIASUBTYPE_FSV2, AV_CODEC_ID_FLASHSV2 },
 
   // Real
   { &MEDIASUBTYPE_RV10, AV_CODEC_ID_RV10 },
@@ -495,6 +496,7 @@ const AMOVIESETUP_MEDIATYPE CLAVVideo::sudPinTypesIn[] = {
   { &MEDIATYPE_Video, &MEDIASUBTYPE_FLV4 },
   { &MEDIATYPE_Video, &MEDIASUBTYPE_flv4 },
   { &MEDIATYPE_Video, &MEDIASUBTYPE_FSV1 },
+  { &MEDIATYPE_Video, &MEDIASUBTYPE_FSV2 },
 
   // Real
   { &MEDIATYPE_Video, &MEDIASUBTYPE_RV10 },
@@ -718,7 +720,7 @@ static codec_config_t m_codec_config[] = {
   { 2, { AV_CODEC_ID_WMV1, AV_CODEC_ID_WMV2 }, "wmv12", "Windows Media Video 7/8" },  // Codec_WMV12
   { 6, { AV_CODEC_ID_MJPEG, AV_CODEC_ID_MJPEGB, AV_CODEC_ID_JPEGLS, AV_CODEC_ID_AMV, AV_CODEC_ID_SP5X, AV_CODEC_ID_AVRN }}, // Codec_MJPEG
   { 2, { AV_CODEC_ID_THEORA, AV_CODEC_ID_VP3 }},                                // Codec_Theora
-  { 2, { AV_CODEC_ID_FLV1, AV_CODEC_ID_FLASHSV }, "flash", "Flash Video (FLV1, FSV1)"}, // Codec_FLV1
+  { 3, { AV_CODEC_ID_FLV1, AV_CODEC_ID_FLASHSV, AV_CODEC_ID_FLASHSV2 }, "flash", "Flash Video (FLV1, FSV1/2)"}, // Codec_FLV1
   { 3, { AV_CODEC_ID_VP6, AV_CODEC_ID_VP6A, AV_CODEC_ID_VP6F }},                   // Codec_VP6
   { 2, { AV_CODEC_ID_SVQ1, AV_CODEC_ID_SVQ3 }, "svq", "SVQ 1 / SVQ 3"},         // Codec_SVQ
   { 1, { AV_CODEC_ID_H261 }},                                                // Codec_H261
