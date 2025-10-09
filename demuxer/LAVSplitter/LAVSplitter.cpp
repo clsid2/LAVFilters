@@ -1507,7 +1507,10 @@ STDMETHODIMP CLAVSplitter::Count(DWORD *pcStreams)
     *pcStreams = 0;
     for (int i = 0; i < CBaseDemuxer::unknown; i++)
     {
-        *pcStreams += (DWORD)m_pDemuxer->GetStreams((CBaseDemuxer::StreamType)i)->size();
+        CBaseDemuxer::CStreamList* streams = m_pDemuxer->GetStreams((CBaseDemuxer::StreamType)i);
+        if (streams) {
+            *pcStreams += (DWORD)streams->size();
+        }
     }
 
     int num_titles = m_pDemuxer->GetNumTitles();
