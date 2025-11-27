@@ -428,7 +428,7 @@ HRESULT CLAVVideoSettingsProp::UpdateHWOptions()
     BOOL bHWDeint = bEnabled && (hwAccel == HWAccel_CUDA || hwAccel == HWAccel_QuickSync);
     BOOL bHWDeintEnabled = bHWDeint && (BOOL)SendDlgItemMessage(m_Dlg, IDC_HWDEINT_ENABLE, BM_GETCHECK, 0, 0);
     BOOL bCUDAOnly = bEnabled && (hwAccel == HWAccel_CUDA);
-    BOOL bDVD = bEnabled && (BOOL)SendDlgItemMessage(m_Dlg, IDC_HWACCEL_MPEG2, BM_GETCHECK, 0, 0);
+    BOOL bDVD = false;// bEnabled && (BOOL)SendDlgItemMessage(m_Dlg, IDC_HWACCEL_MPEG2, BM_GETCHECK, 0, 0);
     BOOL bHEVC = bEnabled && (hwAccel != HWAccel_QuickSync);
     BOOL bVP9 = bEnabled && (hwAccel != HWAccel_QuickSync);
     BOOL bAV1 = bEnabled && (hwAccel != HWAccel_QuickSync) && (hwAccel != HWAccel_CUDA);
@@ -440,6 +440,8 @@ HRESULT CLAVVideoSettingsProp::UpdateHWOptions()
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_VC1), bEnabled);
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_MPEG2), bEnabled);
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_MPEG2_DVD), bDVD);
+
+    ShowWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_MPEG2_DVD), bDVD ? SW_SHOW : SW_HIDE);
 
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_MPEG4), bCUDAOnly);
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_HEVC), bHEVC);

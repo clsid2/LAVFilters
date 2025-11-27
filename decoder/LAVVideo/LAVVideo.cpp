@@ -311,9 +311,10 @@ HRESULT CLAVVideo::ReadSettings(HKEY rootKey)
         if (SUCCEEDED(hr))
             m_settings.bHWFormats[HWCodec_MPEG4] = bFlag;
 
-        bFlag = regHW.ReadBOOL(L"dvd", hr);
-        if (SUCCEEDED(hr))
-            m_settings.bHWFormats[HWCodec_MPEG2DVD] = bFlag;
+        //bFlag = regHW.ReadBOOL(L"dvd", hr);
+        //if (SUCCEEDED(hr))
+        //    m_settings.bHWFormats[HWCodec_MPEG2DVD] = bFlag;
+        m_settings.bHWFormats[HWCodec_MPEG2DVD] = FALSE;
 
         bFlag = regHW.ReadBOOL(L"hevc", hr);
         if (SUCCEEDED(hr))
