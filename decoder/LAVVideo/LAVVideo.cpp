@@ -307,10 +307,6 @@ HRESULT CLAVVideo::ReadSettings(HKEY rootKey)
         if (SUCCEEDED(hr))
             m_settings.bHWFormats[HWCodec_MPEG4] = bFlag;
 
-        bFlag = regHW.ReadBOOL(L"dvd", hr);
-        if (SUCCEEDED(hr))
-            m_settings.bHWFormats[HWCodec_MPEG2DVD] = bFlag;
-
         bFlag = regHW.ReadBOOL(L"hevc", hr);
         if (SUCCEEDED(hr))
             m_settings.bHWFormats[HWCodec_HEVC] = bFlag;
@@ -406,7 +402,6 @@ HRESULT CLAVVideo::SaveSettings()
         regHW.WriteBOOL(L"vc1", m_settings.bHWFormats[HWCodec_VC1]);
         regHW.WriteBOOL(L"mpeg2", m_settings.bHWFormats[HWCodec_MPEG2]);
         regHW.WriteBOOL(L"mpeg4", m_settings.bHWFormats[HWCodec_MPEG4]);
-        regHW.WriteBOOL(L"dvd", m_settings.bHWFormats[HWCodec_MPEG2DVD]);
         regHW.WriteBOOL(L"hevc", m_settings.bHWFormats[HWCodec_HEVC]);
         regHW.WriteBOOL(L"vp9", m_settings.bHWFormats[HWCodec_VP9]);
         regHW.WriteBOOL(L"h264mvc", m_settings.bHWFormats[HWCodec_H264MVC]);

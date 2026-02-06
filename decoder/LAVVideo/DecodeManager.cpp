@@ -49,9 +49,7 @@ STDMETHODIMP CDecodeManager::Close()
     ((codec == AV_CODEC_ID_H264 && m_pLAVVideo->GetHWAccelCodec(HWCodec_H264)) ||                              \
      ((codec == AV_CODEC_ID_VC1 || codec == AV_CODEC_ID_WMV3) && m_pLAVVideo->GetHWAccelCodec(HWCodec_VC1)) || \
      ((codec == AV_CODEC_ID_MPEG2VIDEO || codec == AV_CODEC_ID_MPEG1VIDEO) &&                                  \
-      m_pLAVVideo->GetHWAccelCodec(HWCodec_MPEG2) &&                                                           \
-      (!(m_pLAVVideo->GetDecodeFlags() & LAV_VIDEO_DEC_FLAG_DVD) ||                                            \
-       m_pLAVVideo->GetHWAccelCodec(HWCodec_MPEG2DVD))) ||                                                     \
+      m_pLAVVideo->GetHWAccelCodec(HWCodec_MPEG2)) ||                                                          \
      (codec == AV_CODEC_ID_MPEG4 && m_pLAVVideo->GetHWAccelCodec(HWCodec_MPEG4)) ||                            \
      (codec == AV_CODEC_ID_HEVC && m_pLAVVideo->GetHWAccelCodec(HWCodec_HEVC)) ||                              \
      (codec == AV_CODEC_ID_VP9 && m_pLAVVideo->GetHWAccelCodec(HWCodec_VP9))  ||                               \
@@ -132,8 +130,12 @@ STDMETHODIMP CDecodeManager::CreateDecoder(const CMediaType *pmt, AVCodecID code
 
     CreateSideDataCache(pSideData);
 
+    // disable HW for DVD decoding
+    if (m_pLAVVideo->GetDecodeFlags() & LAV_VIDEO_DEC_FLAG_DVD)
+        bHWDecBlackList = true;
+
     // Try reusing the current HW decoder
-    if (m_pDecoder && m_bHWDecoder && !m_bHWDecoderFailed && HWFORMAT_ENABLED && HWRESOLUTION_ENABLED)
+    if (m_pDecoder && m_bHWDecoder && !bHWDecBlackList && !m_bHWDecoderFailed && HWFORMAT_ENABLED && HWRESOLUTION_ENABLED)
     {
         DbgLog((LOG_TRACE, 10, L"-> Trying to re-use old HW Decoder"));
         hr = m_pDecoder->InitDecoder(codec, pmt, &m_SideDataCache);

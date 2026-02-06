@@ -122,9 +122,6 @@ HRESULT CLAVVideoSettingsProp::OnApplyChanges()
     bFlag = (BOOL)SendDlgItemMessage(m_Dlg, IDC_HWACCEL_MPEG4, BM_GETCHECK, 0, 0);
     m_pVideoSettings->SetHWAccelCodec(HWCodec_MPEG4, bFlag);
 
-    bFlag = (BOOL)SendDlgItemMessage(m_Dlg, IDC_HWACCEL_MPEG2_DVD, BM_GETCHECK, 0, 0);
-    m_pVideoSettings->SetHWAccelCodec(HWCodec_MPEG2DVD, bFlag);
-
     bFlag = (BOOL)SendDlgItemMessage(m_Dlg, IDC_HWACCEL_HEVC, BM_GETCHECK, 0, 0);
     m_pVideoSettings->SetHWAccelCodec(HWCodec_HEVC, bFlag);
 
@@ -360,7 +357,6 @@ HRESULT CLAVVideoSettingsProp::OnActivate()
         SendDlgItemMessage(m_Dlg, IDC_HWACCEL_VC1, BM_SETCHECK, m_HWAccelCodecs[HWCodec_VC1], 0);
         SendDlgItemMessage(m_Dlg, IDC_HWACCEL_MPEG2, BM_SETCHECK, m_HWAccelCodecs[HWCodec_MPEG2], 0);
         SendDlgItemMessage(m_Dlg, IDC_HWACCEL_MPEG4, BM_SETCHECK, m_HWAccelCodecs[HWCodec_MPEG4], 0);
-        SendDlgItemMessage(m_Dlg, IDC_HWACCEL_MPEG2_DVD, BM_SETCHECK, m_HWAccelCodecs[HWCodec_MPEG2DVD], 0);
         SendDlgItemMessage(m_Dlg, IDC_HWACCEL_HEVC, BM_SETCHECK, m_HWAccelCodecs[HWCodec_HEVC], 0);
         SendDlgItemMessage(m_Dlg, IDC_HWACCEL_VP9, BM_SETCHECK, m_HWAccelCodecs[HWCodec_VP9], 0);
         SendDlgItemMessage(m_Dlg, IDC_HWACCEL_AV1, BM_SETCHECK, m_HWAccelCodecs[HWCodec_AV1], 0);
@@ -432,7 +428,6 @@ HRESULT CLAVVideoSettingsProp::UpdateHWOptions()
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_H264), bEnabled);
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_VC1), bEnabled);
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_MPEG2), bEnabled);
-    EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_MPEG2_DVD), bDVD);
 
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_MPEG4), bCUDAOnly);
     EnableWindow(GetDlgItem(m_Dlg, IDC_HWACCEL_HEVC), bHEVC);
@@ -801,14 +796,6 @@ INT_PTR CLAVVideoSettingsProp::OnReceiveMessage(HWND hwnd, UINT uMsg, WPARAM wPa
         {
             bValue = (BOOL)SendDlgItemMessage(m_Dlg, LOWORD(wParam), BM_GETCHECK, 0, 0);
             if (bValue != m_HWAccelCodecs[HWCodec_MPEG4])
-            {
-                SetDirty();
-            }
-        }
-        else if (LOWORD(wParam) == IDC_HWACCEL_MPEG2_DVD && HIWORD(wParam) == BN_CLICKED)
-        {
-            bValue = (BOOL)SendDlgItemMessage(m_Dlg, LOWORD(wParam), BM_GETCHECK, 0, 0);
-            if (bValue != m_HWAccelCodecs[HWCodec_MPEG2DVD])
             {
                 SetDirty();
             }

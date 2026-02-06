@@ -104,7 +104,7 @@ typedef enum LAVVideoHWCodec
     HWCodec_VC1 = Codec_VC1,
     HWCodec_MPEG2 = Codec_MPEG2,
     HWCodec_MPEG4 = Codec_MPEG4,
-    HWCodec_MPEG2DVD,
+    HWCodec_MPEG2DVD_Deprecated, // disabled, DVD video is no longer supported in hardware decoding due to issues with menus and general stability
     HWCodec_HEVC,
     HWCodec_VP9,
     HWCodec_H264MVC,

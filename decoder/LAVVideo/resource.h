@@ -84,7 +84,6 @@
 #define IDC_HWRES_SD                    1075
 #define IDC_HWRES_HD                    1076
 #define IDC_HWRES_UHD                   1077
-#define IDC_HWACCEL_MPEG2_DVD           1078
 #define IDC_TRAYICON                    1079
 #define IDC_HWACCEL_HEVC                1080
 #define IDC_HWACCEL_VP9                 1081
