@@ -136,72 +136,11 @@ STDMETHODIMP CLAVSubtitleConsumer::ProcessFrame(LAVFrame *pFrame)
 
         if (pFrame->format == LAVPixFmt_DXVA2)
         {
-            // Copy the surface, if required
-            if (!(pFrame->flags & LAV_FRAME_FLAG_BUFFER_MODIFY))
-            {
-                IMediaSample *pOrigSample = (IMediaSample *)pFrame->data[0];
-                LPDIRECT3DSURFACE9 pOrigSurface = (LPDIRECT3DSURFACE9)pFrame->data[3];
-
-                hr = m_pLAVVideo->GetD3DBuffer(pFrame);
-                if (FAILED(hr))
-                {
-                    DbgLog((LOG_TRACE, 10, L"CLAVSubtitleConsumer::ProcessFrame: getting a new D3D buffer failed"));
-                }
-                else
-                {
-                    IMediaSample *pNewSample = (IMediaSample *)pFrame->data[0];
-                    pSurface = (LPDIRECT3DSURFACE9)pFrame->data[3];
-                    IDirect3DDevice9 *pDevice = nullptr;
-                    if (SUCCEEDED(hr = pSurface->GetDevice(&pDevice)))
-                    {
-                        hr = pDevice->StretchRect(pOrigSurface, nullptr, pSurface, nullptr, D3DTEXF_NONE);
-                        if (SUCCEEDED(hr))
-                        {
-                            pFrame->flags |= LAV_FRAME_FLAG_BUFFER_MODIFY | LAV_FRAME_FLAG_DXVA_NOADDREF;
-                            pOrigSurface = nullptr;
-
-                            // Release the surface, we only want to hold a ref on the media buffer
-                            pSurface->Release();
-                        }
-                        SafeRelease(&pDevice);
-                    }
-                    if (FAILED(hr))
-                    {
-                        DbgLog((LOG_TRACE, 10,
-                                L"CLAVSubtitleConsumer::ProcessFrame: processing d3d buffer failed, restoring previous "
-                                L"buffer"));
-                        pNewSample->Release();
-                        pSurface->Release();
-                        pFrame->data[0] = (BYTE *)pOrigSample;
-                        pFrame->data[3] = (BYTE *)pOrigSurface;
-                    }
-                }
-            }
-            pSurface = (LPDIRECT3DSURFACE9)pFrame->data[3];
-
-            D3DSURFACE_DESC surfaceDesc;
-            pSurface->GetDesc(&surfaceDesc);
-
-            D3DLOCKED_RECT LockedRect;
-            hr = pSurface->LockRect(&LockedRect, nullptr, 0);
-            if (FAILED(hr))
-            {
-                DbgLog((LOG_TRACE, 10, L"pSurface->LockRect failed (hr: %X)", hr));
-                SafeRelease(&m_SubtitleFrame);
-                return E_FAIL;
-            }
-
-            data[0] = (BYTE *)LockedRect.pBits;
-            data[1] = data[0] + (surfaceDesc.Height * LockedRect.Pitch);
-            stride[0] = LockedRect.Pitch;
-            stride[1] = LockedRect.Pitch;
-
-            format = LAVPixFmt_NV12;
-            bpp = 8;
+            SafeRelease(&m_SubtitleFrame);
+            return E_FAIL;
         }
         else if (pFrame->format == LAVPixFmt_D3D11)
         {
-            // TODO D3D11
             SafeRelease(&m_SubtitleFrame);
             return E_FAIL;
         }
