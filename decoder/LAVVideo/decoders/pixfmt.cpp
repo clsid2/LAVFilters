@@ -317,7 +317,7 @@ bool ValidateLAVFrameBuffers(LAVFrame* pFrame)
             return false;
 
         ptrdiff_t min_linesize = (pFrame->width / desc.planeWidth[i]) * desc.codedbytes;
-        if (pFrame->stride[i] < min_linesize)
+        if (abs(pFrame->stride[i]) < min_linesize)
             return false;
     }
 
