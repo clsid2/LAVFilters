@@ -318,6 +318,8 @@ trynoformat:
 
     LPWSTR extension = pszFileName ? PathFindExtensionW(pszFileName) : nullptr;
 
+    bool webp = false;
+
     const AVInputFormat *inputFormat = nullptr;
     if (format)
     {
@@ -340,6 +342,9 @@ trynoformat:
                 }
                 break;
             }
+        }
+        if (_wcsicmp(extension, L".webp") == 0) {
+            webp = true;
         }
 
         if (byteContext == nullptr || bFileSource)
@@ -366,6 +371,9 @@ trynoformat:
     av_dict_set(&options, "skip_clear", "1", 0);        // mpegts program handling
     av_dict_set(&options, "max_reload", "7", 0);        // playlist reloading for HLS
     av_dict_set(&options, "extension_picky", "0", 0);   // less strict HLS parsing
+    if (webp) {
+        av_dict_set(&options, "ignore_loop", "0", 0);   // using looping as specified in image file
+    }
 
     if (pszUserAgent)
     {
