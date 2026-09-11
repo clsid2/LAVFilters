@@ -7,3 +7,15 @@
 [submodule "qsdecoder"]
 	path = qsdecoder
 	url = https://gitea.1f0.de/LAV/qsdecoder.git
+[submodule "msvc/libs/dav1d/dav1d"]
+	path = msvc/libs/dav1d/dav1d
+	url = https://code.videolan.org/videolan/dav1d.git
+[submodule "msvc/libs/libxml2/libxml2"]
+	path = msvc/libs/libxml2/libxml2
+	url = https://github.com/GNOME/libxml2.git
+[submodule "msvc/libs/speex/speex"]
+	path = msvc/libs/speex/speex
+	url = https://github.com/xiph/speex.git
+[submodule "msvc/libs/bzip2/bzip2"]
+	path = msvc/libs/bzip2/bzip2
+	url = https://sourceware.org/git/bzip2.git
