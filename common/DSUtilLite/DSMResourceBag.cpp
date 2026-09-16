@@ -79,8 +79,12 @@ STDMETHODIMP CDSMResourceBag::ResGet(DWORD iIndex, BSTR *ppName, BSTR *ppDesc, B
     }
     if (ppData)
     {
-        *pDataLen = (DWORD)r.data.size();
-        memcpy(*ppData = (BYTE *)CoTaskMemAlloc(*pDataLen), r.data.data(), *pDataLen);
+        BYTE* dataout = (BYTE*)CoTaskMemAlloc(r.data.size());
+        if (dataout) {
+            *pDataLen = (DWORD)r.data.size();
+            *ppData = dataout;
+            memcpy(dataout, r.data.data(), r.data.size());
+        }
     }
     if (pTag)
     {
@@ -127,7 +131,11 @@ STDMETHODIMP CDSMResourceBag::ResAppend(LPCWSTR pName, LPCWSTR pDesc, LPCWSTR pM
                                         DWORD_PTR tag)
 {
     CAutoLock lock(&m_csResources);
-    m_resources.push_back(CDSMResource());
+    try {
+        m_resources.push_back(CDSMResource());
+    } catch (...) {
+        return E_FAIL;
+    }
     return ResSet((DWORD)m_resources.size() - 1, pName, pDesc, pMime, pData, len, tag);
 }
 
