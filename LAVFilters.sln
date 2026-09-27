@@ -52,6 +52,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opencore-amrnb", "msvc\libs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opencore-amrwb", "msvc\libs\opencore-amr\opencore-amrwb.vcxproj", "{5910550A-26D8-5EE8-9654-9FECA437D541}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "msvc\libs\zlib\zlib.vcxproj", "{D285BE86-4A76-5740-8595-7F095BF3486F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -206,6 +208,14 @@ Global
 		{5910550A-26D8-5EE8-9654-9FECA437D541}.Release MSVC|Win32.Build.0 = Release|Win32
 		{5910550A-26D8-5EE8-9654-9FECA437D541}.Release MSVC|x64.ActiveCfg = Release|x64
 		{5910550A-26D8-5EE8-9654-9FECA437D541}.Release MSVC|x64.Build.0 = Release|x64
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Debug|x64.ActiveCfg = Debug|x64
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Release|Win32.ActiveCfg = Release|Win32
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Release|x64.ActiveCfg = Release|x64
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Release MSVC|Win32.ActiveCfg = Release|Win32
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Release MSVC|Win32.Build.0 = Release|Win32
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Release MSVC|x64.ActiveCfg = Release|x64
+		{D285BE86-4A76-5740-8595-7F095BF3486F}.Release MSVC|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

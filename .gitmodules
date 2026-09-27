@@ -19,3 +19,6 @@
 [submodule "msvc/libs/bzip2/bzip2"]
 	path = msvc/libs/bzip2/bzip2
 	url = https://sourceware.org/git/bzip2.git
+[submodule "msvc/libs/zlib/zlib"]
+	path = msvc/libs/zlib/zlib
+	url = https://github.com/madler/zlib.git
