@@ -188,6 +188,19 @@ if [ "$compiler" = clang ]; then
   command -v clang > /dev/null || { echo "clang not found; install the Visual Studio component \"C++ Clang Compiler for Windows\""; exit 1; }
 fi
 
+# ffmpeg builds with GNU make and probes the libraries with pkg-config, so a POSIX
+# environment (MSYS2) is still needed alongside the Visual Studio developer prompt.
+missing=""
+for tool in make pkg-config nasm cygpath MSBuild.exe ; do
+  command -v $tool > /dev/null 2>&1 || missing="$missing $tool"
+done
+[ "$compiler" = cl ] && { command -v cl > /dev/null 2>&1 || missing="$missing cl"; }
+if [ -n "$missing" ]; then
+  echo "Not found on PATH:$missing"
+  echo "Run from a Visual Studio developer prompt for the target architecture, with MSYS2 (make, pkg-config) and nasm on PATH."
+  exit 1
+fi
+
 echo Building ffmpeg in MSVC ${libconfig} config with ${compiler}...
 
 make_dirs
